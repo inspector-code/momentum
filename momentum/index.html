@@ -11,6 +11,7 @@
     <title>Momentum</title>
 </head>
 <body>
+<button class="next-image__button">-></button>
 <div class="time">
     <div class="time__block" id="hour">12</div>
     <div class="time__separator">:</div>
@@ -21,13 +22,18 @@
 <div id="date"></div>
 <div class="greetings">
     <div class="greetings__day" id="greeting"></div>
-    <input type="text" placeholder="Enter your name..." class="greetings__name" id="name">
+    <input type="text" placeholder="Введи свое имя..." class="greetings__name" id="name">
     <div class="greetings__display-name" id="display__name"></div>
 </div>
 <div class="focus">
-    <div class="focus__tile">What is Your Focus For Today</div>
-    <input type="text" placeholder="Enter your focus..." class="focus__text" id="focus">
+    <div class="focus__tile">Твои планы на сегодня:</div>
+    <input type="text" placeholder="Напиши свои планы здесь..." class="focus__text" id="focus">
     <div class="focus__display-text" id="display__focus"></div>
+</div>
+<div class="quotes">
+    <div class="quotes__text"></div>
+    <div class="quotes__author"></div>
+    <button class="quote__button">Следующая цитата</button>
 </div>
 <script src="./assets/js/script.js"></script>
 </body>
