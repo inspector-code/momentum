@@ -1,0 +1,90 @@
+@import "cssreset.css";
+@import "normalize.css";
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    color: black;
+}
+
+.time {
+    display: flex;
+    font-size: 8rem;
+    margin-bottom: 15px;
+}
+
+.time__block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+}
+
+.time__separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#date {
+    font-family: 'Arial', serif;
+    font-size: 2rem;
+    margin-bottom: 50px;
+}
+
+.greetings {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    line-height: 130%;
+}
+
+.greetings__day {
+    margin-right: 10px;
+}
+
+.greetings__name {
+    display: block;
+    background: transparent;
+    border: none;
+    width: 230px;
+}
+
+.greetings__display-name, .focus__display-text {
+    display: none;
+}
+
+.greetings__name::placeholder {
+    color: black;
+}
+
+.focus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.6rem;
+}
+
+.focus__tile {
+    margin-bottom: 15px;
+}
+
+.focus__text {
+    display: block;
+    background: transparent;
+    border: none;
+    width: 450px;
+    text-align: center;
+}
+
+.focus__text::placeholder {
+    color: black;
+    text-align: center;
+}
+
