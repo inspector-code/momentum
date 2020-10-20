@@ -11,8 +11,19 @@ const nextImageButton = document.querySelector('.next-image__button')
 const quoteText = document.querySelector('.quotes__text')
 const quoteAuthor = document.querySelector('.quotes__author')
 const quoteButton = document.querySelector('.quote__button')
+const temp = document.querySelector('.weather__temperature')
+const air = document.querySelector('.weather__air')
+const wind = document.querySelector('.weather__wind')
+const weatherIcon = document.querySelector('.weather__icon')
+const weatherCity = document.querySelector('.weather__city')
+const weatherInput = document.getElementById('city')
+const weatherButton = document.querySelector('.weather__button')
+const weatherBlock = document.querySelector('.weather__container')
 
 if (localStorage.getItem('counter') === null) localStorage.setItem('counter', '0')
+if (localStorage.getItem('city') === null) localStorage.setItem('city', 'минск')
+
+let validCity = ''
 
 function addZero(n) {
     return (parseInt(n, 10) < 10 ? '0' : '') + n
@@ -55,14 +66,17 @@ function showTime() {
     seconds.innerText = `${addZero(sec)}`
     fullDate.innerText = `${days[day]}, ${date} ${months[month]}`
 
-    if (min === 0 && sec === 0) nextImg()
+    if (min === 0 && sec === 0) {
+        nextImg()
+        getQuote()
+        getWeather()
+    }
     setTimeout(showTime, 1000)
 }
 
 function setBgGreet() {
     const images = ['01.jpg', '02.jpg', '03.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg']
     if (+localStorage.getItem('counter') === images.length) localStorage.setItem('counter', '0')
-    // let today = new Date(2020, 6, 10, 18, 33, 30)
     let today = new Date()
     let hour = today.getHours()
     let img = document.createElement('img')
@@ -156,13 +170,74 @@ function editModeFocus() {
 }
 
 function getQuote() {
-    quoteButton.style.visibility = 'hidden'
+    quoteButton.disabled = true
     const url = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru`;
     fetch(url).then(response => response.json()).then(data => {
         quoteText.textContent = data.quoteText
         quoteAuthor.textContent = data.quoteAuthor
-        quoteButton.style.visibility = 'visible'
+        quoteButton.disabled = false
     })
+}
+
+function getWeather() {
+    const city = localStorage.getItem('city')
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ru&appid=377548d4b7b255d4668e4666fc59bf50&units=metric`
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            weatherCity.textContent = data.name
+            if (weatherIcon.classList.length > 2) {
+                weatherIcon.classList.remove(weatherIcon.classList[weatherIcon.classList.length - 1])
+                weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+            } else {
+                weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+            }
+            temp.textContent = `${data.main.temp.toFixed(0)}°C`
+            air.textContent = `Влажность: ${data.main.humidity.toFixed(0)}%`
+            wind.textContent = `Ветер: ${data.wind.speed.toFixed(0)} м/с`
+            weatherBlock.style.display = 'flex'
+            weatherInput.style.display = 'none'
+            weatherButton.style.display = 'flex'
+            weatherInput.placeholder = 'Введите город'
+            weatherInput.value = ''
+            validCity = city
+        })
+        .catch(() => {
+            weatherInput.style.display = 'block'
+            weatherInput.value = ''
+            weatherInput.placeholder = 'Такого города нет'
+            weatherInput.focus()
+        })
+}
+
+function editCity() {
+    weatherBlock.style.display = 'none'
+    weatherButton.style.display = 'none'
+    weatherInput.style.display = 'block'
+    weatherInput.focus()
+}
+
+function setCity(e) {
+    if (e.type === 'keypress') {
+        if (e.code === 'Enter') {
+            if (!e.target.value) {
+                localStorage.setItem('city', validCity)
+                getWeather()
+            } else {
+                localStorage.setItem('city', e.target.value)
+                weatherInput.blur()
+                getWeather()
+            }
+        }
+    } else {
+        if (!e.target.value) {
+            localStorage.setItem('city', validCity)
+            getWeather()
+        } else {
+            localStorage.setItem('city', e.target.value)
+            getWeather()
+        }
+    }
 }
 
 name.addEventListener('keypress', setName)
@@ -173,11 +248,13 @@ displayName.addEventListener('click', editModeName)
 displayFocus.addEventListener('click', editModeFocus)
 nextImageButton.addEventListener('click', nextImg)
 quoteButton.addEventListener('click', getQuote)
+weatherButton.addEventListener('click', editCity)
+weatherInput.addEventListener('keypress', setCity)
+weatherInput.addEventListener('blur', setCity)
 
 showTime()
 setBgGreet()
 getData('name', displayName, name)
 getData('focus', displayFocus, focus)
 getQuote()
-
-
+getWeather()

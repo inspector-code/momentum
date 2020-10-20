@@ -1,41 +1,109 @@
 @import "cssreset.css";
 @import "normalize.css";
 
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
 body {
-    font-family: 'Quicksand', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    font-family: 'Roboto', sans-serif;
     height: 100vh;
     transition: background-image 1s ease-in-out;
     color: white;
 }
 
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 30px;
+}
+
 .time {
     display: flex;
-    font-size: 8rem;
-    margin-bottom: 15px;
+    font-size: 7rem;
+    margin-bottom: 10px;
+    border-bottom: 2px solid white;
 }
 
 .time__block {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 160px;
-}
-
-.time__separator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 150px;
 }
 
 #date {
-    font-family: 'Arial', serif;
     font-size: 2rem;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+}
+
+.weather {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.weather__container {
+    display: flex;
+    align-items: center;
+}
+
+.weather__container > div,
+.weather__container > i {
+    margin: 0 8px;
+}
+
+.weather__temperature {
+    font-size: 1.9rem;
+}
+
+.weather__icon {
+    font-size: 4rem;
+}
+
+.weather__city-input {
+    display: none;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid white;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 8px;
+    caret-color: white;
+    color: white;
+}
+
+.weather__city-input::placeholder {
+    font-weight: lighter;
+    letter-spacing: 0.03em;
+    color: white;
+    opacity: .9;
+}
+
+.weather__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.weather__button:hover, .next-image__button:hover {
+    transform: scale(1.2) rotate(1turn);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .greetings {
@@ -99,9 +167,23 @@ body {
     left: 20px;
     width: 50px;
     height: 50px;
-    background: red;
     border-radius: 50%;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.next-image__button:active {
+    transform: scale(1);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .quotes__text {
@@ -113,7 +195,5 @@ body {
     margin-bottom: 10px;
 }
 
-.quote__button {
-    visibility: hidden;
-}
+
 
