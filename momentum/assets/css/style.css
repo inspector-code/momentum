@@ -15,46 +15,57 @@ body {
 
 .container {
     height: 100%;
+    max-width: 500px;
+    margin: 0 auto;
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     text-align: center;
-    padding: 0 30px;
+    padding: 100px 20px 20px;
 }
 
 .time {
     display: flex;
+    justify-content: center;
     font-size: 7rem;
     margin-bottom: 10px;
+    text-shadow: 1px 1px 2px black;
+}
+
+.time__container {
+    display: flex;
     border-bottom: 2px solid white;
 }
 
-.time__block {
-    width: 150px;
-}
-
 #date {
+    font-weight: lighter;
     font-size: 2rem;
     margin-bottom: 20px;
+    text-shadow: 1px 1px 2px black;
 }
 
 .weather {
-    height: 65px;
+    min-height: 65px;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px black;
 }
 
 .weather__container {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 
 .weather__container > div,
 .weather__container > i {
     margin: 0 8px;
+    display: flex;
+    align-items: center;
 }
 
 .weather__temperature {
@@ -65,7 +76,9 @@ body {
     font-size: 4rem;
 }
 
-.weather__city-input {
+.weather__city-input,
+.greetings__name,
+.focus__text {
     display: none;
     outline: none;
     border: none;
@@ -77,15 +90,18 @@ body {
     color: white;
 }
 
-.weather__city-input::placeholder {
+.weather__city-input::placeholder,
+.greetings__name::placeholder,
+.focus__text::placeholder {
+    font-size: 1.3rem;
     font-weight: lighter;
     letter-spacing: 0.03em;
     color: white;
-    opacity: .9;
+    opacity: .8;
 }
 
-.weather__button {
-    display: flex;
+.weather__button, .quote__button {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 35px;
@@ -99,19 +115,22 @@ body {
     outline: none;
     cursor: pointer;
     transition: .5s;
+    box-shadow: 0 0 7px rgba(0,0,0,0.5);
 }
 
-.weather__button:hover, .next-image__button:hover {
+.weather__button:hover, .next-image__button:hover, .quote__button:hover {
     transform: scale(1.2) rotate(1turn);
     background-color: rgba(0, 0, 0, 0.6);
 }
 
 .greetings {
+    min-height: 60px;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 1.6rem;
     margin-bottom: 15px;
-    line-height: 130%;
+    text-shadow: 1px 1px 2px black;
 }
 
 .greetings__day {
@@ -119,46 +138,39 @@ body {
 }
 
 .greetings__name {
-    display: block;
-    background: transparent;
-    border: none;
-    width: 230px;
-    color: white;
+    width: 220px;
 }
 
 .greetings__display-name, .focus__display-text {
     display: none;
 }
 
-.greetings__name::placeholder {
-    color: white;
-}
-
 .focus {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     font-size: 1.6rem;
-    line-height: 130%;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px black;
 }
 
-.focus__tile {
+.focus__title {
+    font-size: 1.2rem;
     margin-bottom: 15px;
 }
 
 .focus__text {
-    display: block;
-    background: transparent;
-    border: none;
-    width: 450px;
+    font-size: 1.6rem;
     text-align: center;
-    color: white;
+    width: 100%;
 }
 
 .focus__text::placeholder {
-    color: white;
     text-align: center;
+}
+
+.focus__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
 }
 
 .next-image__button {
@@ -179,20 +191,68 @@ body {
     outline: none;
     cursor: pointer;
     transition: .5s;
+    box-shadow: 0 0 7px rgba(0,0,0,0.5);
 }
 
-.next-image__button:active {
+.next-image__button i {
+    font-size: 2rem;
+}
+
+.next-image__button:active, .quote__button:active {
     transform: scale(1);
     background-color: rgba(0, 0, 0, 0.8);
 }
 
+.quote__button:disabled, .next-image__button:disabled {
+    color: gray;
+}
+
+.quotes__container {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin-bottom: 10px;
+}
+
 .quotes__text {
-    width: 500px;
     margin-bottom: 15px;
+    font-weight: lighter;
+    line-height: 130%;
 }
 
 .quotes__author {
-    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+@media (max-width: 499px) {
+    :root {
+        font-size: 13px;
+    }
+
+    .time {
+        font-size: 6rem;
+    }
+
+    .next-image__button {
+        left: 50%;
+        transform: translate(-50%);
+        width: 40px;
+        height: 40px;
+    }
+
+    .container {
+        padding: 70px 20px 20px;
+    }
+
+    .quotes {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 426px) {
+    :root {
+        font-size: 11px;
+    }
 }
 
 

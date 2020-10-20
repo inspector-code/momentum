@@ -77,35 +77,35 @@ function showTime() {
 function setBgGreet() {
     const images = ['01.jpg', '02.jpg', '03.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg']
     if (+localStorage.getItem('counter') === images.length) localStorage.setItem('counter', '0')
-    let today = new Date()
-    let hour = today.getHours()
-    let img = document.createElement('img')
-    let src = images[+localStorage.getItem('counter')]
+    const today = new Date()
+    const hour = today.getHours()
+    const img = document.createElement('img')
+    const src = images[+localStorage.getItem('counter')]
 
     if (hour >= 6 && hour < 12) {
         img.src = `./assets/img/morning/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/morning/${src}')`
         }
-        greeting.textContent = 'Доброе утро'
+        greeting.textContent = 'Доброе утро,'
     } else if (hour >= 12 && hour < 18) {
         img.src = `./assets/img/day/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/day/${src}')`
         }
-        greeting.textContent = 'Добрый день'
+        greeting.textContent = 'Добрый день,'
     } else if (hour >= 18 && hour < 24) {
         img.src = `./assets/img/evening/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/evening/${src}')`
         }
-        greeting.textContent = 'Добрый вечер'
+        greeting.textContent = 'Добрый вечер,'
     } else {
         img.src = `./assets/img/night/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/night/${src}')`
         }
-        greeting.textContent = 'Доброй ночи'
+        greeting.textContent = 'Доброй ночи,'
     }
 }
 
@@ -147,12 +147,12 @@ function setName(e) {
 function setFocus(e) {
     if (e.type === 'keypress') {
         if (e.code === 'Enter') {
-            localStorage.setItem('focus', e.target.value)
+            localStorage.setItem('focus', e.target.value.trim())
             focus.blur()
-            getData('name', displayName, name)
+            getData('focus', displayFocus, focus)
         }
     } else {
-        localStorage.setItem('focus', e.target.value)
+        localStorage.setItem('focus', e.target.value.trim())
         getData('focus', displayFocus, focus)
     }
 }
@@ -171,7 +171,7 @@ function editModeFocus() {
 
 function getQuote() {
     quoteButton.disabled = true
-    const url = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru`;
+    const url = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru`
     fetch(url).then(response => response.json()).then(data => {
         quoteText.textContent = data.quoteText
         quoteAuthor.textContent = data.quoteAuthor
@@ -193,26 +193,24 @@ function getWeather() {
                 weatherIcon.classList.add(`owf-${data.weather[0].id}`)
             }
             temp.textContent = `${data.main.temp.toFixed(0)}°C`
-            air.textContent = `Влажность: ${data.main.humidity.toFixed(0)}%`
-            wind.textContent = `Ветер: ${data.wind.speed.toFixed(0)} м/с`
+            air.innerHTML = `<i class="material-icons">bubble_chart</i><span>&nbsp;${data.main.humidity.toFixed(0)}%</span>`
+            wind.innerHTML = `<i class="material-icons">toys</i><span>&nbsp;${data.wind.speed.toFixed(0)} м/с</span>`
             weatherBlock.style.display = 'flex'
             weatherInput.style.display = 'none'
-            weatherButton.style.display = 'flex'
-            weatherInput.placeholder = 'Введите город'
+            weatherInput.placeholder = 'введите город'
             weatherInput.value = ''
             validCity = city
         })
         .catch(() => {
             weatherInput.style.display = 'block'
             weatherInput.value = ''
-            weatherInput.placeholder = 'Такого города нет'
+            weatherInput.placeholder = 'такого города нет'
             weatherInput.focus()
         })
 }
 
 function editCity() {
     weatherBlock.style.display = 'none'
-    weatherButton.style.display = 'none'
     weatherInput.style.display = 'block'
     weatherInput.focus()
 }

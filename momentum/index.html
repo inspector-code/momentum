@@ -14,40 +14,50 @@
 </head>
 <body>
 <div class="container">
-    <button class="next-image__button"><i class="material-icons md-36">image</i></button>
-    <div class="time">
-        <div class="time__block" id="hour"></div>
-        <div class="time__separator">:</div>
-        <div class="time__block" id="minutes"></div>
-        <div class="time__separator">:</div>
-        <div class="time__block" id="seconds"></div>
-    </div>
-    <div id="date"></div>
-    <div class="weather">
-        <button class="weather__button"><i class="material-icons">place</i></button>
-        <div class="weather__container">
-            <div class="weather__city"></div>
-            <i class="weather__icon owf"></i>
-            <div class="weather__temperature"></div>
-            <div class="weather__air"></div>
-            <div class="weather__wind"></div>
+    <button class="next-image__button"><i class="material-icons">image</i></button>
+    <div class="container-inner">
+        <div class="time">
+            <div class="time__container">
+                <div id="hour"></div>
+                <div class="time__separator">:</div>
+                <div id="minutes"></div>
+                <div class="time__separator">:</div>
+                <div id="seconds"></div>
+            </div>
         </div>
-        <input placeholder="Введите город" class="weather__city-input" type="text" id="city">
-    </div>
-    <div class="greetings">
-        <div class="greetings__day" id="greeting"></div>
-        <input type="text" placeholder="Введи свое имя..." class="greetings__name" id="name">
-        <div class="greetings__display-name" id="display__name"></div>
-    </div>
-    <div class="focus">
-        <div class="focus__tile">Твои планы на сегодня:</div>
-        <input type="text" placeholder="Напиши свои планы здесь..." class="focus__text" id="focus">
-        <div class="focus__display-text" id="display__focus"></div>
+        <div id="date"></div>
+        <div class="weather">
+            <div class="weather__container">
+                <button class="weather__button"><i class="material-icons">place</i></button>
+                <div class="weather__city"></div>
+                <i class="weather__icon owf"></i>
+                <div class="weather__temperature"></div>
+                <div class="weather__air"></div>
+                <div class="weather__wind"></div>
+            </div>
+            <div class="weather__city">
+                <input placeholder="Введите город" class="weather__city-input" type="text" id="city">
+            </div>
+        </div>
+        <div class="greetings">
+            <div class="greetings__day" id="greeting"></div>
+            <input type="text" placeholder="введите свое имя..." class="greetings__name" id="name">
+            <div class="greetings__display-name" id="display__name"></div>
+        </div>
+        <div class="focus">
+            <div class="focus__title">Твои планы на сегодня:</div>
+            <div class="focus__container">
+                <input type="text" placeholder="напиши свои планы здесь..." class="focus__text" id="focus">
+                <div class="focus__display-text" id="display__focus"></div>
+            </div>
+        </div>
     </div>
     <div class="quotes">
-        <div class="quotes__text"></div>
-        <div class="quotes__author"></div>
-        <button class="quote__button">Следующая цитата</button>
+        <div class="quotes__container">
+            <div class="quotes__text"></div>
+            <div class="quotes__author"></div>
+        </div>
+        <button class="quote__button"><i class="material-icons">autorenew</i></button>
     </div>
 </div>
 <script src="./assets/js/script.js"></script>
