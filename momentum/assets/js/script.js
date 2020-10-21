@@ -36,7 +36,8 @@ function shuffle(arr){
 const images = shuffle(imagesName)
 
 //Set initial data
-if (localStorage.getItem('counter') === null) localStorage.setItem('counter', '0')
+const globalHour = new Date().getHours()
+localStorage.setItem('counter', `${globalHour}`)
 if (localStorage.getItem('city') === null) localStorage.setItem('city', 'минск')
 
 //Add zero to clock
@@ -84,7 +85,7 @@ function showTime() {
 
     //Data change every hour
     if (min === 0 && sec === 0) {
-        localStorage.setItem('counter', `${+localStorage.getItem('counter') + 1}`)
+        localStorage.setItem('counter', `${globalHour}`)
         setBgGreet()
         getQuote()
         getWeather()
@@ -94,35 +95,33 @@ function showTime() {
 
 //Set background image
 function setBgGreet() {
-    if (+localStorage.getItem('counter') === images.length) localStorage.setItem('counter', '0')
-    const today = new Date()
-    const hour = today.getHours()
+    if (localStorage.getItem('counter') === '24') localStorage.setItem('counter', '0')
+    const localHour = +localStorage.getItem('counter')
     const img = document.createElement('img')
-    const src = images[+localStorage.getItem('counter')]
 
-    if (hour >= 6 && hour < 12) {
-        localStorage.setItem('folderCounter', '0')
+    if (localHour >= 6 && localHour < 12) {
+        const src = images[localStorage.getItem('counter') - 6]
         img.src = `./assets/img/morning/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/morning/${src}')`
         }
         greeting.textContent = 'Доброе утро,'
-    } else if (hour >= 12 && hour < 18) {
-        localStorage.setItem('folderCounter', '1')
+    } else if (localHour >= 12 && localHour < 18) {
+        const src = images[localStorage.getItem('counter') - 12]
         img.src = `./assets/img/day/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/day/${src}')`
         }
         greeting.textContent = 'Добрый день,'
-    } else if (hour >= 18 && hour < 24) {
-        localStorage.setItem('folderCounter', '2')
+    } else if (localHour >= 18 && localHour < 24) {
+        const src = images[localStorage.getItem('counter') - 18]
         img.src = `./assets/img/evening/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/evening/${src}')`
         }
         greeting.textContent = 'Добрый вечер,'
     } else {
-        localStorage.setItem('folderCounter', '3')
+        const src = images[localStorage.getItem('counter')]
         img.src = `./assets/img/night/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/night/${src}')`
@@ -131,32 +130,10 @@ function setBgGreet() {
     }
 }
 
-//Change images on click
 function nextImg() {
     nextImageButton.disabled = true
-    const folders = {
-        0: 'morning',
-        1: 'day',
-        2: 'evening',
-        3: 'night'
-    }
-    const foldersCount = Object.keys(folders).length
-
     localStorage.setItem('counter', `${+localStorage.getItem('counter') + 1}`)
-    if (+localStorage.getItem('counter') === images.length) {
-        localStorage.setItem('counter', '0')
-        localStorage.setItem('folderCounter', `${+localStorage.getItem('folderCounter') + 1}`)
-    }
-    if (+localStorage.getItem('folderCounter') === foldersCount) localStorage.setItem('folderCounter', '0')
-
-    const img = document.createElement('img')
-    const imageNumber = +localStorage.getItem('counter')
-    const folderNumber = +localStorage.getItem('folderCounter')
-
-    img.src = `./assets/img/${folders[folderNumber]}/${images[imageNumber]}`
-    img.onload = () => {
-        document.body.style.background = `center / cover no-repeat url('./assets/img/${folders[folderNumber]}/${images[imageNumber]}')`
-    }
+    setBgGreet()
     setTimeout(() => nextImageButton.disabled = false, 1000)
 }
 
