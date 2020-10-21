@@ -21,7 +21,7 @@ body {
     justify-content: space-between;
     flex-direction: column;
     text-align: center;
-    padding: 100px 20px 20px;
+    padding: 30px 20px;
 }
 
 .time {
@@ -134,15 +134,22 @@ body {
 }
 
 .greetings__day {
+    text-align: right;
     margin-right: 10px;
+    flex-grow: 1;
 }
 
 .greetings__name {
-    width: 220px;
+    width: 50%;
 }
 
 .greetings__display-name, .focus__display-text {
     display: none;
+}
+
+.greetings__display-name {
+    text-align: left;
+    flex-grow: 1;
 }
 
 .focus {
@@ -171,6 +178,11 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 60px;
+}
+
+.focus__display-text {
+    width: 100%;
+    word-wrap: break-word;
 }
 
 .next-image__button {
@@ -205,6 +217,7 @@ body {
 
 .quote__button:disabled, .next-image__button:disabled {
     color: gray;
+    transform: scale(1);
 }
 
 .quotes__container {
@@ -224,7 +237,7 @@ body {
     font-weight: bold;
 }
 
-@media (max-width: 499px) {
+@media (max-width: 599px) {
     :root {
         font-size: 13px;
     }
@@ -234,24 +247,35 @@ body {
     }
 
     .next-image__button {
-        left: 50%;
-        transform: translate(-50%);
-        width: 40px;
-        height: 40px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 10px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .next-image__button i {
+        font-size: 20px;
     }
 
     .container {
-        padding: 70px 20px 20px;
+        padding: 50px 10px 20px;
     }
 
     .quotes {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 426px) {
     :root {
         font-size: 11px;
+    }
+
+    .weather__container > div,
+    .weather__container > i {
+        margin: 0 5px;
     }
 }
 
