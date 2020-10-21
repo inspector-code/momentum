@@ -19,18 +19,32 @@ const weatherCity = document.querySelector('.weather__city')
 const weatherInput = document.getElementById('city')
 const weatherButton = document.querySelector('.weather__button')
 const weatherBlock = document.querySelector('.weather__container')
+const imagesName = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg']
+let validCity = ''
 
-const images = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg']
+//Shuffle images array
+function shuffle(arr){
+    let j, temp
+    for(let i = arr.length - 1; i > 0; i--){
+        j = Math.floor(Math.random()*(i + 1))
+        temp = arr[j];
+        arr[j] = arr[i]
+        arr[i] = temp
+    }
+    return arr
+}
+const images = shuffle(imagesName)
 
+//Set initial data
 if (localStorage.getItem('counter') === null) localStorage.setItem('counter', '0')
 if (localStorage.getItem('city') === null) localStorage.setItem('city', 'минск')
 
-let validCity = ''
-
+//Add zero to clock
 function addZero(n) {
     return (parseInt(n, 10) < 10 ? '0' : '') + n
 }
 
+//Clock
 function showTime() {
     const today = new Date()
     const hour = today.getHours()
@@ -68,14 +82,17 @@ function showTime() {
     seconds.innerText = `${addZero(sec)}`
     fullDate.innerText = `${days[day]}, ${date} ${months[month]}`
 
+    //Data change every hour
     if (min === 0 && sec === 0) {
-        nextImg()
+        localStorage.setItem('counter', `${+localStorage.getItem('counter') + 1}`)
+        setBgGreet()
         getQuote()
         getWeather()
     }
     setTimeout(showTime, 1000)
 }
 
+//Set background image
 function setBgGreet() {
     if (+localStorage.getItem('counter') === images.length) localStorage.setItem('counter', '0')
     const today = new Date()
@@ -114,39 +131,36 @@ function setBgGreet() {
     }
 }
 
+//Change images on click
 function nextImg() {
     nextImageButton.disabled = true
-    localStorage.setItem('counter', `${+localStorage.getItem('counter') + 1}`)
-    setBgGreet()
-    setTimeout(() => nextImageButton.disabled = false, 1000)
-}
-
-function nextImgNew() {
-    localStorage.setItem('counter', `${+localStorage.getItem('counter') + 1}`)
-    if (+localStorage.getItem('counter') === images.length) {
-        localStorage.setItem('counter', '0')
-        localStorage.setItem('folderCounter', `${+localStorage.getItem('folderCounter') + 1}`)
-    }
-    const img = document.createElement('img')
-    const imageNumber = +localStorage.getItem('counter')
-    const folderNumber = +localStorage.getItem('folderCounter')
-
-
     const folders = {
         0: 'morning',
         1: 'day',
         2: 'evening',
         3: 'night'
     }
+    const foldersCount = Object.keys(folders).length
+
+    localStorage.setItem('counter', `${+localStorage.getItem('counter') + 1}`)
+    if (+localStorage.getItem('counter') === images.length) {
+        localStorage.setItem('counter', '0')
+        localStorage.setItem('folderCounter', `${+localStorage.getItem('folderCounter') + 1}`)
+    }
+    if (+localStorage.getItem('folderCounter') === foldersCount) localStorage.setItem('folderCounter', '0')
+
+    const img = document.createElement('img')
+    const imageNumber = +localStorage.getItem('counter')
+    const folderNumber = +localStorage.getItem('folderCounter')
 
     img.src = `./assets/img/night/${images[imageNumber]}`
     img.onload = () => {
         document.body.style.background = `center / cover no-repeat url('./assets/img/${folders[folderNumber]}/${images[imageNumber]}')`
     }
-
-    // localStorage.setItem('folderCounter', `${+localStorage.getItem('folderCounter') + 1}`)
+    setTimeout(() => nextImageButton.disabled = false, 1000)
 }
 
+//Get name and focus data
 function getData(item, displayValue, editValue) {
     let localData = localStorage.getItem(item)
     if (!localData) {
@@ -160,6 +174,7 @@ function getData(item, displayValue, editValue) {
     }
 }
 
+//Set user name
 function setName(e) {
     if (e.type === 'keypress') {
         if (e.code === 'Enter') {
@@ -173,6 +188,7 @@ function setName(e) {
     }
 }
 
+//Set focus text
 function setFocus(e) {
     if (e.type === 'keypress') {
         if (e.code === 'Enter') {
@@ -186,6 +202,7 @@ function setFocus(e) {
     }
 }
 
+//Change name
 function editModeName() {
     displayName.style.display = 'none'
     name.style.display = 'block'
@@ -193,6 +210,7 @@ function editModeName() {
     name.focus()
 }
 
+//Change focus
 function editModeFocus() {
     displayFocus.style.display = 'none'
     focus.style.display = 'block'
@@ -200,6 +218,7 @@ function editModeFocus() {
     focus.focus()
 }
 
+//Get quote data
 function getQuote() {
     quoteButton.disabled = true
     const url = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru`
@@ -210,6 +229,7 @@ function getQuote() {
     })
 }
 
+//Get current weather
 function getWeather() {
     const city = localStorage.getItem('city')
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ru&appid=377548d4b7b255d4668e4666fc59bf50&units=metric`
@@ -240,12 +260,14 @@ function getWeather() {
         })
 }
 
+//Change city
 function editCity() {
     weatherBlock.style.display = 'none'
     weatherInput.style.display = 'block'
     weatherInput.focus()
 }
 
+//Set current city
 function setCity(e) {
     if (e.type === 'keypress') {
         if (e.code === 'Enter') {
