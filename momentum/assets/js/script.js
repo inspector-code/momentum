@@ -153,7 +153,7 @@ function nextImg() {
     const imageNumber = +localStorage.getItem('counter')
     const folderNumber = +localStorage.getItem('folderCounter')
 
-    img.src = `./assets/img/night/${images[imageNumber]}`
+    img.src = `./assets/img/${folders[folderNumber]}/${images[imageNumber]}`
     img.onload = () => {
         document.body.style.background = `center / cover no-repeat url('./assets/img/${folders[folderNumber]}/${images[imageNumber]}')`
     }
