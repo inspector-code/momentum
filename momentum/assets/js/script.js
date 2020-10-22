@@ -89,6 +89,7 @@ function showTime() {
         setBgGreet()
         getQuote()
         getWeather()
+        setGreetings()
     }
     setTimeout(showTime, 1000)
 }
@@ -105,27 +106,36 @@ function setBgGreet() {
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/morning/${src}')`
         }
-        greeting.textContent = 'Доброе утро,'
     } else if (localHour >= 12 && localHour < 18) {
         const src = images[localStorage.getItem('counter') - 12]
         img.src = `./assets/img/day/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/day/${src}')`
         }
-        greeting.textContent = 'Добрый день,'
     } else if (localHour >= 18 && localHour < 24) {
         const src = images[localStorage.getItem('counter') - 18]
         img.src = `./assets/img/evening/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/evening/${src}')`
         }
-        greeting.textContent = 'Добрый вечер,'
     } else {
         const src = images[localStorage.getItem('counter')]
         img.src = `./assets/img/night/${src}`
         img.onload = () => {
             document.body.style.background = `center / cover no-repeat url('./assets/img/night/${src}')`
         }
+    }
+}
+
+//Set greetings
+function setGreetings() {
+    if (globalHour >= 6 && globalHour < 12) {
+        greeting.textContent = 'Доброе утро,'
+    } else if (globalHour >= 12 && globalHour < 18) {
+        greeting.textContent = 'Добрый день,'
+    } else if (globalHour >= 18 && globalHour < 24) {
+        greeting.textContent = 'Добрый вечер,'
+    } else {
         greeting.textContent = 'Доброй ночи,'
     }
 }
@@ -282,6 +292,7 @@ weatherInput.addEventListener('blur', setCity)
 
 showTime()
 setBgGreet()
+setGreetings()
 getData('name', displayName, name)
 getData('focus', displayFocus, focus)
 getQuote()
