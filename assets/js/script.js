@@ -232,7 +232,7 @@ function getWeather() {
             }
             temp.textContent = `${data.main.temp.toFixed(0)}°C`
             air.innerHTML = `<i class="material-icons">bubble_chart</i><span>&nbsp;${data.main.humidity.toFixed(0)}%</span>`
-            wind.innerHTML = `<i class="material-icons">toys</i><span>&nbsp;${data.wind.speed.toFixed(0)} м/с</span>`
+            wind.innerHTML = `<i class="material-icons">air</i><span>&nbsp;${data.wind.speed.toFixed(0)} м/с</span>`
             weatherBlock.style.display = 'flex'
             weatherInput.style.display = 'none'
             weatherInput.placeholder = 'введите город'
